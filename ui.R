@@ -1,5 +1,6 @@
 library(shiny)
 library(dygraphs)
+library(shinyWidgets)
 
 sp500_data <- read.csv("data/sp500_info_big.csv", stringsAsFactors = FALSE)
 choices <- sp500_data$ticker
@@ -23,13 +24,11 @@ shinyUI(fluidPage(
             br(),
             br(),
             
-            checkboxInput("log", "Plot y axis on log scale", 
-                          value = FALSE),
-            
-            checkboxInput("adjust", 
-                          "Adjust prices for inflation", value = FALSE)
+            checkboxInput("returns", "Plot log returns", 
+                          value = FALSE)
             ),
         mainPanel(
+            radioGroupButtons(inputId = "duration", choices = c("1day","1w","1mon", "3mon")),
             dygraphOutput("dygraph")
         )
         #mainPanel(plotOutput("plot"))
